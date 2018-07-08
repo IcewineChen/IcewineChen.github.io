@@ -79,18 +79,24 @@
 
 
 
-<meta name="description" content="human pose estimation现状">
+<meta name="description" content="从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的grou">
 <meta name="keywords" content="deep learning,pose estimation">
 <meta property="og:type" content="article">
-<meta property="og:title" content="human-pose-estimation">
+<meta property="og:title" content="batch_hard">
 <meta property="og:url" content="http://yoursite.com/2018/07/08/human-pose-estimation/index.html">
 <meta property="og:site_name" content="IcewineChen&#39;s blog">
-<meta property="og:description" content="human pose estimation现状">
+<meta property="og:description" content="从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的grou">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-08T12:32:52.625Z">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2s2xbgkyj30rm0aomye.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/005uXRWzly1ft2saiwrcmj30nd09tac2.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2smte6gvj30nw08xwgm.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2taka98hj30qx095jtt.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2tey7fwij30fk0bnjsx.jpg">
+<meta property="og:updated_time" content="2018-07-08T14:35:37.853Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="human-pose-estimation">
-<meta name="twitter:description" content="human pose estimation现状">
+<meta name="twitter:title" content="batch_hard">
+<meta name="twitter:description" content="从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的grou">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2s2xbgkyj30rm0aomye.jpg">
 
 
 
@@ -126,7 +132,7 @@
 
 
 
-  <title>human-pose-estimation | IcewineChen's blog</title>
+  <title>batch_hard | IcewineChen's blog</title>
   
 
 
@@ -270,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">human-pose-estimation</h1>
+          <h1 class="post-title" itemprop="name headline">batch_hard</h1>
         
 
         <div class="post-meta">
@@ -282,7 +288,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T20:31:35+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-08T20:40:32+08:00">
                 2018-07-08
               </time>
             
@@ -305,7 +311,29 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pose-estimation/" itemprop="url" rel="index">
+                  <a href="/categories/deep-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">deep learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/paper-reading/" itemprop="url" rel="index">
+                    <span itemprop="name">paper reading</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/deep-learning/paper-reading/pose-estimation/" itemprop="url" rel="index">
                     <span itemprop="name">pose estimation</span>
                   </a>
                 </span>
@@ -342,7 +370,34 @@
       
 
       
-        <h1 id="human-pose-estimation现状"><a href="#human-pose-estimation现状" class="headerlink" title="human pose estimation现状"></a>human pose estimation现状</h1>
+        <p>从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的ground truth坐标高斯分布内生成。3d上方法普遍还是以2d的结果+深度信息的回归做框架。不过最近读了一篇CVPR2018的3d pose工作，觉得3d pose在in the wild上还有很大潜力可挖，在这里也会分享一下。</p>
+<h1 id="研究概述"><a href="#研究概述" class="headerlink" title="研究概述"></a>研究概述</h1><h2 id="2d-pose-estimation"><a href="#2d-pose-estimation" class="headerlink" title="2d pose estimation"></a>2d pose estimation</h2><p>从CVPR2016到AAAI2018，2D &amp; 3D human pose estimation（姿态估计）浮现了不少好的方法。按时间顺序来说，我大概印象比较深刻的有：</p>
+<ul>
+<li>Convolution pose machine，出自2016的CVPR。论文地址(<a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Wei_Convolutional_Pose_Machines_CVPR_2016_paper.pdf" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Wei_Convolutional_Pose_Machines_CVPR_2016_paper.pdf</a>) ，CMU的工作，一种2D pose估计的方法，利用多个不同scale的effective Receptive Field对应的heatmap进行姿态估计。我个人觉得这篇工作其实很不错，之前做的项目用到过cpm的model做预测，对于固定摄像角度的单人姿态估计非常不错，不过model嵌入到系统里速度和效果不如下面提到的openpose，而且工作在2018年视角看来也比较老了……不过我觉得CPM工作挺经典的，我最早接触的工作也是这篇。</li>
+<li><p>Stacked Hourglass Network，论文地址（<a href="https://arxiv.org/abs/1603.06937" target="_blank" rel="noopener">https://arxiv.org/abs/1603.06937</a>) ，非常经典的工作，很多后续的工作都以stacked hourglass作为backbone或者baseline，许多3d pose的工作也借鉴了这一结构。这篇文章提出的stacked hourglass的方法，用了一种downsample-upsample的encode-decode的结构。stacked hourglass使用了一种residual module的初级模块，采用了卷积路加跳连路，跳连路卷积核保证单元输入输出channel相同。之后以residual module为base结构，逐级降采样后再重新升采样，每一个降采样路会跳出一个跳连路以保留原尺度，再与升采样后同一尺度的输出相加，整个结构图如下所示<br><img src="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2s2xbgkyj30rm0aomye.jpg" alt=""></p>
+</li>
+<li><p>鼎鼎大名的openpose库的文章，出自2017的CVPR。Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields，也是来自CMU的工作。这个work工程价值也很高，在github上也开源了openpose库，自带demo里有一个多人场景下的pose estimation demo。这篇文章和工作主要贡献在提供了一种多人场景下的姿态估计方法，不同于许多先做检测再做pose的自上而下方法，这篇文章直接采用了自下而上的思路，将关键点heatmap和人的关节之间的连接策略一起得到。base network采用了一种multi-branch的结构，其中一路用于提keypoint的confidence map，另一个branch用于提PAF，也就是用于关节连接的特征，每一路都有多个stage，最后自然而然地实现了多人场景下的pose estimation。这篇文章的网络结构如下所示<br><img src="http://wx3.sinaimg.cn/mw690/005uXRWzly1ft2saiwrcmj30nd09tac2.jpg" alt=""></p>
+</li>
+<li><p>pyramid residual network，出自ICCV2017的文章。 文章全名learning feature pyramids for human pose estimation。可以直接去ICCV2017的库里搜。这篇文章好在写的非常详细……怎么说呢，就是读起来非常非常舒服，文章结构很好。其实核心思想就是在stacked hourglass based network的基础上，将residual module替换成了pyramid module，pyramid residual module利用了输入的多个scale，在性能上得到了一定的提升。文章还提到了这种multi-scale的网络初始化的一些trick，并且设计了一个实验来验证residual network中将shortcut一路改成BN+relu+3x3卷积效果更好（虽然我实在想不明白为什么）……不过我觉得这文章的写法和思路非常清晰，所以拿出来想说一下。下面给出prm单元的结构，就是这种利用了输入的多个scale的multi结构，也算是比较巧妙<br><img src="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2smte6gvj30nw08xwgm.jpg" alt=""></p>
+</li>
+</ul>
+<h2 id="3d-pose-estimation"><a href="#3d-pose-estimation" class="headerlink" title="3d pose estimation"></a>3d pose estimation</h2><p>接下来想提两篇3d pose estimation的工作。也可以说是两篇半……因为有一篇其实是听组内分享时候学习的=-=</p>
+<blockquote>
+<p>首先简单提下这半篇吧。出自A simple yet effective baseline for 3d human pose estimation。以2d的骨架作为输入，然后回归直接得3d骨架信息。整个结构如下所示。延续了2d+regression的思路。</p>
+</blockquote>
+<ul>
+<li>这周末读了两篇in the wild的3d pose工作。第一篇是Towards 3D Human Pose Estimation in theWild: aWeakly-supervised Approach， ICCV2017的工作。这篇文章利用了一种弱监督的思路，将2d和3d dataset放在一起训练，利用一些先验经验定义了一个2d数据集生成结果的3d 回归loss。该方法的数据集combine了2d和3d集，3d集有3d pose的ground truth，但是3d数据集都是出自lab环境，起不到in the wild的无约束效果。那怎么办？引入2d集做弱监督。整体网络结构还是先用stacked hourglass做2d预测，不同的是这次利用了stacked hourglass中多个层的信息作为3d回归模块的输入，再去进行3d回归，这样在3d回归的模型中，引入的in the wild的2d数据集的弱监督就会将constraint引入了结果，实现了in the wild上的性能提升，我在这理解为一种transfer的trick。这个思路也在后面的基于GAN的工作中作为generator。整体结构如下</li>
+</ul>
+<p><img src="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2taka98hj30qx095jtt.jpg" alt=""></p>
+<ul>
+<li>之后是我这周末读的另一篇工作，跟PRM出自同一个组的工作，3D Human Pose Estimation in the Wild by Adversarial Learning，出自CVPR2018。整体思路是用GAN改善一下上面这篇的work。generator直接选用了上一篇的结构，在discriminator上，用了一种多输入的结构：</li>
+</ul>
+<p><img src="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2tey7fwij30fk0bnjsx.jpg" alt=""></p>
+<ul>
+<li>在其中，geometric descriptor是将ground truth和sample的x,y,z坐标之差和平方直接取pairwise形式的6D向量，2d heatmap和depth map直接就是从2d和3d module得到，这个结构值得借鉴。discriminator将所有3d信息编码后以1为y算一个binary entropy loss，2d sample以0为y去算loss。训练时，先train生成器，再轮流train discriminator和generator即可。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到目前来说，pose estimation是一个还算比较热门的课题。目前看来工作相关热度不低，而且还有些能做的地方，比如说3d pose目前的工作就不是很多，2d多人估计的方法还需要进一步改善，目前最好的是sjtu提出的alphapose，不过该库沿用了自顶而下的设计，所以我觉得基于PAF这种连接特征的自底而上的方法还有探究空间。之后不太忙的时候可能把network代码拉出来分析分析再写一篇吧……</p>
+
       
     </div>
     
@@ -470,7 +525,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -514,7 +569,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#human-pose-estimation现状"><span class="nav-number">1.</span> <span class="nav-text">human pose estimation现状</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#研究概述"><span class="nav-number">1.</span> <span class="nav-text">研究概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2d-pose-estimation"><span class="nav-number">1.1.</span> <span class="nav-text">2d pose estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3d-pose-estimation"><span class="nav-number">1.2.</span> <span class="nav-text">3d pose estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
             
 
           </div>
