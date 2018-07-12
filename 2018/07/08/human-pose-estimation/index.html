@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2smte6gvj30nw08xwgm.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2taka98hj30qx095jtt.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2tey7fwij30fk0bnjsx.jpg">
-<meta property="og:updated_time" content="2018-07-08T14:59:32.237Z">
+<meta property="og:updated_time" content="2018-07-12T16:23:54.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="human pose estimation">
 <meta name="twitter:description" content="从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的grou">
@@ -396,7 +396,7 @@
 <ul>
 <li>在其中，geometric descriptor是将ground truth和sample的x,y,z坐标之差和平方直接取pairwise形式的6D向量，2d heatmap和depth map直接就是从2d和3d module得到，这个结构值得借鉴。discriminator将所有3d信息编码后以1为y算一个binary entropy loss，2d sample以0为y去算loss。训练时，先train生成器，再轮流train discriminator和generator即可。</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到目前来说，pose estimation是一个还算比较热门的课题。目前看来工作相关热度不低，而且还有些能做的地方，比如说3d pose目前的工作就不是很多，2d多人估计的方法还需要进一步改善，目前最好的是sjtu提出的alphapose，不过该库沿用了自顶而下的设计，所以我觉得基于PAF这种连接特征的自底而上的方法还有探究空间。之后不太忙的时候可能把network代码拉出来分析分析再写一篇吧……</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到目前来说，pose estimation是一个还算比较热门的课题。目前看来工作相关热度不低，而且还有些能做的地方，比如说3d pose目前的工作就不是很多，2d多人估计的方法还需要进一步改善，目前最好的是sjtu提出的alphapose，不过该库沿用了自顶而下的设计，所以我觉得基于PAF这种连接特征的自底而上的方法还有探究空间。之后不太忙的时候可能把network代码拉出来分析分析再写一篇吧……</p>
 
       
     </div>
@@ -593,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#研究概述"><span class="nav-number">1.</span> <span class="nav-text">研究概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2d-pose-estimation"><span class="nav-number">1.1.</span> <span class="nav-text">2d pose estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3d-pose-estimation"><span class="nav-number">1.2.</span> <span class="nav-text">3d pose estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#研究概述"><span class="nav-number">1.</span> <span class="nav-text">研究概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2d-pose-estimation"><span class="nav-number">1.1.</span> <span class="nav-text">2d pose estimation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3d-pose-estimation"><span class="nav-number">1.2.</span> <span class="nav-text">3d pose estimation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

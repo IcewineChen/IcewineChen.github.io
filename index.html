@@ -325,8 +325,8 @@
         
           
             <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"highlight"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>之前想写多写点代码分析和最近跑的实验代码的剖析，结果发现代码高亮不了……现在hexo的代码高亮卡的比较严，首先得先把site下的config里的highlight字段的几项变为true（之前的auto_detect是false），再把主题下的config里的highlight的主题修改成自己想修改的即可，hexo里自带了5种高亮。</p>
-<p>之后周末填个坑吧……pytorch0.4其实最近跑了一下好多坑都被填完了。周末随便写点mxnet和pytorch的代码分析和总结吧。就酱。想回家睡两觉。</p>
+<h1 id="意义不明的测试"><a href="#意义不明的测试" class="headerlink" title="意义不明的测试"></a>意义不明的测试</h1><p>之前想写多写点代码分析和最近跑的实验代码的剖析，结果发现代码高亮不了……现在hexo的代码高亮卡的比较严，首先得先把site下的config里的highlight字段的几项变为true（之前的auto_detect是false），再把主题下的config里的highlight的主题修改成自己想修改的即可，hexo里自带了5种高亮。</p>
+<h1 id="下一篇填坑"><a href="#下一篇填坑" class="headerlink" title="下一篇填坑=-="></a>下一篇填坑=-=</h1><p>之后周末填个坑吧……pytorch0.4其实最近跑了一下好多坑都被填完了。周末随便写点mxnet和pytorch的代码分析和总结吧。就酱。想回家睡两觉。不过想先把最近看的番总结一下，顺带给island安利一波……非常超神的游戏，可能这两天给今年一月番做个总结，讲讲游戏，开个游戏块吧……这个博客大概以后会频繁更更，也当发发牢骚了，顺带在漫评路上走一走……多说和网易云跟帖都挂了，所以评论暂时就不开了</p>
 
           
         
@@ -516,7 +516,7 @@
 <ul>
 <li>在其中，geometric descriptor是将ground truth和sample的x,y,z坐标之差和平方直接取pairwise形式的6D向量，2d heatmap和depth map直接就是从2d和3d module得到，这个结构值得借鉴。discriminator将所有3d信息编码后以1为y算一个binary entropy loss，2d sample以0为y去算loss。训练时，先train生成器，再轮流train discriminator和generator即可。</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>到目前来说，pose estimation是一个还算比较热门的课题。目前看来工作相关热度不低，而且还有些能做的地方，比如说3d pose目前的工作就不是很多，2d多人估计的方法还需要进一步改善，目前最好的是sjtu提出的alphapose，不过该库沿用了自顶而下的设计，所以我觉得基于PAF这种连接特征的自底而上的方法还有探究空间。之后不太忙的时候可能把network代码拉出来分析分析再写一篇吧……</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>到目前来说，pose estimation是一个还算比较热门的课题。目前看来工作相关热度不低，而且还有些能做的地方，比如说3d pose目前的工作就不是很多，2d多人估计的方法还需要进一步改善，目前最好的是sjtu提出的alphapose，不过该库沿用了自顶而下的设计，所以我觉得基于PAF这种连接特征的自底而上的方法还有探究空间。之后不太忙的时候可能把network代码拉出来分析分析再写一篇吧……</p>
 
           
         
