@@ -45,44 +45,6 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-      
-    
-
-    
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
@@ -374,7 +336,7 @@
 <p>self.up2 = nn.Upsample(scale_factor = 2)</p>
 </blockquote>
 <p>事实上upsample需要一个align_corners的参数，在0.4.0之前这个参数应该被直接给了None，导致在0.4.0版本load pretrain的模型后，跑到upsample层的forward时在module的检查时一直报错，会一直报给你检查不到align_corners。如果使用我修改后的pytorch0.4.0兼容的代码train的模型是不存在这个问题的，然而我检查的时候依然没有找到align_corner参数，理论上应该default是False。这可能是底层实现有改动，更底层的部分我就step out没管了。这个大概是版本更新导致的bug，具体有待继续调试验证。</p>
-<h2 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h2><p>之后大概会在这个结构+GAN复现为主，效果如果还好的话打算在GAN上引入新的method做改进。</p>
+<h2 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h2><p>之后会打算对文中内容复现。不过目前遇到一个问题是关节点depth map怎么得到。这个问题目前没找到什么合适的代码或是工具，如果有大佬知道的话希望能邮件或是github issue给我……非常感谢</p>
 
           
         
