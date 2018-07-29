@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="deep learning,mxnet,triplet loss," />
+  <meta name="keywords" content="mxnet,deep learning,triplet loss," />
 
 
 
@@ -80,14 +80,14 @@
 
 
 <meta name="description" content="I have reproduced a mxnet-version of batch_hard triplet loss.If you want to get the code, click this website(https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss). I achieve the batch hard in">
-<meta name="keywords" content="deep learning,mxnet,triplet loss">
+<meta name="keywords" content="mxnet,deep learning,triplet loss">
 <meta property="og:type" content="article">
 <meta property="og:title" content="batch_hard">
 <meta property="og:url" content="http://yoursite.com/2018/07/05/batch-hard/index.html">
 <meta property="og:site_name" content="IcewineChen&#39;s blog">
 <meta property="og:description" content="I have reproduced a mxnet-version of batch_hard triplet loss.If you want to get the code, click this website(https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss). I achieve the batch hard in">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-08T12:51:02.400Z">
+<meta property="og:updated_time" content="2018-07-29T14:56:10.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="batch_hard">
 <meta name="twitter:description" content="I have reproduced a mxnet-version of batch_hard triplet loss.If you want to get the code, click this website(https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss). I achieve the batch hard in">
@@ -354,6 +354,7 @@
 <li>Used resnetV2 to get 128-dimensions embeddings</li>
 <li>Used triplet loss to train embeddings</li>
 </ul>
+<h2 id="大概意思"><a href="#大概意思" class="headerlink" title="大概意思"></a>大概意思</h2><p>其实就是我用mxnet复现了一版batch hard triplet loss的代码。最早我是在re-id task相关的文章上看到了这篇方法，原文在arxiv上，17年出的……当时用了作者给的repo跑，实验了batch hard和batch all两种形式的triplet loss，发现效果相当不错，思路写得也相当清晰（具体文章请见上面给的链接哈=-=），不过paper reading太久之前做的了，可能之后再用到这种思路的时候会写一篇paper reading整理思路。不过其实为什么work，文章的思路已经写得很明白了，hard mining。batch-all的方法利用了全部可以使用的三元组，将样本中的三元组利用大幅提高，这种trick非常简单粗暴，但是确实在batch-hard前在market1501的benchmark上非常行之有效。但是batch hard的方法从另一个角度入手，对batch内的样本进行hard-mining，去学习极端的三元组。这个hard-mining的过程简单可以概括为选最难的，也就是对选取的anchor距离最远的正样本，同理再选最难的负样本组成一个三元组，这样就选择了最有效的三元组，收敛后效果一定是比原始的triplet loss效果要好的。这个思路非常的简单易懂，但是确实很work。为了快和方便调试我就做了一版mxnet版本的batch hard的代码。tensorflow版本调试的时候确实比较尴尬……相比之下同样采用符号式编程思想的mxnet调试相当简洁，动态图中间的值可以各种print和查看，而且dataloader也方便调试，继承以后主要就注意两点：一是shape二是变量名，内部的检查机制主要就这两件事，由于值在动态图计算过程中打断点到内部很简单，所以调试起来也非常爽快。如果对这版代码或是相关工作感兴趣，请戳我的github主页，链接戳这里：(<a href="https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss" target="_blank" rel="noopener">https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss</a>)</p>
 
       
     </div>
@@ -371,9 +372,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
-          
             <a href="/tags/mxnet/" rel="tag"># mxnet</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
           
             <a href="/tags/triplet-loss/" rel="tag"># triplet loss</a>
           
@@ -481,7 +482,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -552,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Based"><span class="nav-number">1.</span> <span class="nav-text">Based</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">3.</span> <span class="nav-text">Architecture</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Based"><span class="nav-number">1.</span> <span class="nav-text">Based</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Architecture"><span class="nav-number">3.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大概意思"><span class="nav-number">4.</span> <span class="nav-text">大概意思</span></a></li></ol></div>
             
 
           </div>

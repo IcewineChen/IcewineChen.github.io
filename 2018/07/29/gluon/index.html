@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mxnet,deep learning," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于gluon前几天跟小伙伴们讨论到了几个问题，突然讨论这个事情：比如说我的数据load进来之后，想把不同的batch并行，这样该怎么弄？ 我很喜欢pytorch，但是我大部分时间对pytorch的并行调用dataparallel时的实际操作是把数据一个batch拆分，然后并行到设备上，很明显不符合需求，要是改动还得对底层动刀。然后突然想到嗯，好像除了这个问题，有些时候去符号式这种东西，还真不太适">
+<meta name="keywords" content="mxnet,deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈gluon和其他我用过的框架">
+<meta property="og:url" content="http://yoursite.com/2018/07/29/gluon/index.html">
+<meta property="og:site_name" content="IcewineChen&#39;s blog">
+<meta property="og:description" content="关于gluon前几天跟小伙伴们讨论到了几个问题，突然讨论这个事情：比如说我的数据load进来之后，想把不同的batch并行，这样该怎么弄？ 我很喜欢pytorch，但是我大部分时间对pytorch的并行调用dataparallel时的实际操作是把数据一个batch拆分，然后并行到设备上，很明显不符合需求，要是改动还得对底层动刀。然后突然想到嗯，好像除了这个问题，有些时候去符号式这种东西，还真不太适">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-29T15:38:19.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈gluon和其他我用过的框架">
+<meta name="twitter:description" content="关于gluon前几天跟小伙伴们讨论到了几个问题，突然讨论这个事情：比如说我的数据load进来之后，想把不同的batch并行，这样该怎么弄？ 我很喜欢pytorch，但是我大部分时间对pytorch的并行调用dataparallel时的实际操作是把数据一个batch拆分，然后并行到设备上，很明显不符合需求，要是改动还得对底层动刀。然后突然想到嗯，好像除了这个问题，有些时候去符号式这种东西，还真不太适">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/29/gluon/"/>
+
+
+
+
+
+  <title>谈谈gluon和其他我用过的框架 | IcewineChen's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">IcewineChen's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/gluon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="IcewineChen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/Rinne.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IcewineChen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">谈谈gluon和其他我用过的框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T22:35:16+08:00">
+                2018-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mxnet/" itemprop="url" rel="index">
+                    <span itemprop="name">mxnet</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="关于gluon"><a href="#关于gluon" class="headerlink" title="关于gluon"></a>关于gluon</h2><p>前几天跟小伙伴们讨论到了几个问题，突然讨论这个事情：比如说我的数据load进来之后，想把不同的batch并行，这样该怎么弄？</p>
+<p>我很喜欢pytorch，但是我大部分时间对pytorch的并行调用dataparallel时的实际操作是把数据一个batch拆分，然后并行到设备上，很明显不符合需求，要是改动还得对底层动刀。然后突然想到嗯，好像除了这个问题，有些时候去符号式这种东西，还真不太适合快速复现或者验证想法。目前大部分时间复现我确实都优先考虑mxnet做。如果不太需要自定义层，基本才会考虑pytorch。</p>
+<p>然后呢……就是安利一发mxnet了。顺带也相当于总结下我对这些框架的使用体验。最早在16年的时候，我猜大家肯定都在耍……caffe。那时候出于我写c++写习惯了的，一度出现了c++是世界上最好的语言的错觉……事实上caffe确实定制度好，自由度高，python接口也问题不大，但是确实需要自定义的太多，编译各种问题吐血，而且出于语言习惯，我更乐意从头写个layer，backward慢慢磨，然而这确实相当浪费时间。而且到后来越来越多的文章都在用tensorflow，出于代码的编写和调试时间成本，还是基本放弃了caffe，除非有时候看一些早期的文章，放出的代码基于caffe还会看一看，其他时候基本不考虑caffe了。caffe2出了以后，detectron似乎也没能完全拯救他，我是编译了一份扔一边了。不过当年在公司实习的时候，大家确实也都在用caffe，我的结论就是是出于部署和性能考量，caffe比较适合。然而mxnet在分布式和部署上我觉得不比caffe差，事实也确实是后续业务也开始转向mxnet。总体而言caffe在科研上开始没用tensorflow或是pytorch那么闪光了。</p>
+<p>之后tensorflow。没什么可多说的，基本上你肯定得会。放tensorflow代码的文章多如牛毛，文章多，社区好，早期时候带自动微分这种牛逼功能，背景牛逼，而且符号式编程其实更符合我的思维方式（也可能有人对符号式编程写model不习惯，这个只是个人意见）。然后绝大部分时间我research绝不会写tensorflow的代码。为啥……那个调试真的痛苦的要死，我对tensorflow的更新最终停在了estimator出来的那个版本。虽然后期的eager Execution机制引入动态图，但是本质上依然只是一个功能，整个框架依然是基于静态图开发的。tensorflow对于实现你表达的思路是个非常非常优秀的框架，然而确实会给你中间的一些验证带来很多不必要的麻烦，而且相对比较笨重。对于科研实验来说，很多东西是相当冗余的，对于要求快速实验验证想法的research来说这个问题还是比较致命的。</p>
+<p>接下来才是比较重要的比较。我觉得对于大部分来说大概还是偏好pytorch和mxnet一点（其实并没mxnet什么毛关系）。支持动态图，当时刚转到pytorch上的我觉得这简直是最棒的机制了。动态图在调试上优势太大，中间变量查看十分十分方便，对于快速验证模型的一些问题提，比如说中间shape，dtype以及各种问题供了巨大便利，不需要静态图的各种包装以及session去跑。在同样采用动态图的基础上，mxnet和pytorch的核心区别，我觉得大概就在符号编程上了。pytorch继承了torch当年的优良意志：我们绝对不用符号式编程……符号式编程简单来说就是把变量就定义成一个符号，之后把数据扔进来的时候再通过name告诉他哪喂什么就好，相对来说很适合直接扔一个symbol在这，最后再考虑数据的问题就好，可以把模型定义单独作为一件事情。而pytorch数据流向直接定义调用就可以，最后需要求导记得用variable封装好即可。</p>
+<p>然而gluon出来以后，我觉得mxnet确实兼顾了各家之长。gluon里两点让我觉得特别优秀。第一点就是不得不提的混合编程，这点看下面代码就知道：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hourglass</span>(<span class="title">gluon</span>.<span class="title">nn</span>.<span class="title">HybridBlock</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>,n,nModules,nFeats)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">super</span>(Hourglass,<span class="keyword">self</span>).__init_<span class="number">_</span>()</span><br><span class="line">        <span class="keyword">self</span>.n = n</span><br><span class="line">        <span class="keyword">self</span>.nModules = nModules</span><br><span class="line">        <span class="keyword">self</span>.nFeats = nFeats</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.up1<span class="number">_</span> = gluon.nn.HybridSequential()</span><br><span class="line">        <span class="keyword">self</span>.low1<span class="number">_</span> = gluon.nn.HybridSequential()</span><br><span class="line">        <span class="keyword">self</span>.low2<span class="number">_</span> = gluon.nn.HybridSequential()</span><br><span class="line">        <span class="keyword">self</span>.low3<span class="number">_</span> = gluon.nn.HybridSequential()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.up1<span class="number">_</span>.add(Residual(in_channels=<span class="keyword">self</span>.nFeats,out_channels=<span class="keyword">self</span>.nFeats))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span>.low1 = gluon.nn.MaxPool2D(pool_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.low1<span class="number">_</span>.add(Residual(in_channels=<span class="keyword">self</span>.nFeats,out_channels=<span class="keyword">self</span>.nFeats))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.n &gt; <span class="number">1</span><span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.low2 = Hourglass(n=n-<span class="number">1</span>,nModules=<span class="keyword">self</span>.nModules,nFeats = <span class="keyword">self</span>.nFeats)</span><br><span class="line">        <span class="symbol">else:</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">                <span class="keyword">self</span>.low2<span class="number">_</span>.add(Residual(in_channels=nFeats,out_channels=nFeats))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.low3<span class="number">_</span>.add(Residual(in_channels=<span class="keyword">self</span>.nFeats,out_channels=nFeats))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.up2 = gluon.nn.Conv2DTranspose(channels=<span class="keyword">self</span>.nFeats,kernel_size=(<span class="number">2</span>,<span class="number">2</span>),strides=(<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span><span class="params">(<span class="keyword">self</span>,F,x)</span></span><span class="symbol">:</span></span><br><span class="line">        up1 = x</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            up1 = <span class="keyword">self</span>.up1<span class="number">_</span>[i](up1)</span><br><span class="line">        </span><br><span class="line">        low1 = <span class="keyword">self</span>.low1(x)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            low1 = <span class="keyword">self</span>.low1<span class="number">_</span>[i](low1)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.n &gt; <span class="number">1</span><span class="symbol">:</span></span><br><span class="line">            low2 = <span class="keyword">self</span>.low2(low1)</span><br><span class="line">        <span class="symbol">else:</span></span><br><span class="line">            low2 = low1</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">                low2 = <span class="keyword">self</span>.low2<span class="number">_</span>[i](low2)</span><br><span class="line">        </span><br><span class="line">        low3 = low2</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="keyword">self</span>.nModules)<span class="symbol">:</span></span><br><span class="line">            low3 = <span class="keyword">self</span>.low3<span class="number">_</span>[i](low3)</span><br><span class="line">        <span class="comment"># gluon的nn里没有upsample，混合直接调用ndarray的sample</span></span><br><span class="line">        <span class="comment"># up2 = F.UpSampling(low3,sample_type='bilinear',scale=2)</span></span><br><span class="line">        up2 = <span class="keyword">self</span>.up2(low3)</span><br><span class="line">        <span class="keyword">return</span> up1 + up2</span><br></pre></td></tr></table></figure></p>
+<p>这是我定义的一个Hourglass结构，只需要你的net或者模块继承hybridblock，forward时候就需要实现一个hybrid_forward(self,F,x)。这个F是区别于非混合式forward的量，调用时候F.function就会自动找你的function从什么里调用，是从符号式还是正常数值计算的ndarray的包里去找。这个功能真的相当人性，一部分ndarray中实现的函数，在symbol包内或是gluon.nn包内是没有的，这样使得mxnet的可用性和使用体验更好，用户大概只需要关注结构定义就可以。当然逻辑比较简单的网络可以直接Sequential add即可。</p>
+<p>二是几乎没什么学习成本。这个结构看着熟不熟悉？基本就和pytorch里的结构定义是一样的。有大量的人都在主用pytorch，这样的风格从pytorch迁移代码十分方便。比起mxnet symbol相对更繁琐的定义，这种class内部定义层，再在forward连接的方式大家确实写起来十分习惯，而且也比较符合我脑子里想像的dl定义范式和思维习惯。mxnet目前唯一的问题大概api更新太快，之前每一版更新变动都不小，还处在高速发展，其实也就是不太稳定的阶段，但是bug也已经减少了很多，可用性高而且复现好用，个人觉得框架选择的话，pytorch最轻松上手，mxnet大概是使用起来感觉最好的。如果硬要选框架自己写代码，主役pytorch或是mxnet都是好选择，然而考虑到科研中的泛用度，mxnet确实略逊pytorch一筹，mxnet代码的文章不是很多。但是就个人喜好而言，mxnet在gluon引入以后可能更好一点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mxnet/" rel="tag"># mxnet</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/16/pytorch-hg-3d代码分析/" rel="next" title="pytorch-hg-3d代码分析">
+                <i class="fa fa-chevron-left"></i> pytorch-hg-3d代码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/Rinne.png"
+                alt="IcewineChen" />
+            
+              <p class="site-author-name" itemprop="name">IcewineChen</p>
+              <p class="site-description motion-element" itemprop="description">for technology</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/IcewineChen" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:xidianchr@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于gluon"><span class="nav-number">1.</span> <span class="nav-text">关于gluon</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">IcewineChen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
