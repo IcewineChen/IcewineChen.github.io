@@ -12,17 +12,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[吐槽预报]]></title>
-    <url>%2F2018%2F08%2F27%2F%E5%90%90%E6%A7%BD%E9%A2%84%E6%8A%A5%2F</url>
-    <content type="text"><![CDATA[这半年或者一年都很烦，每天都想吐槽。明天干完正事花时间写一篇完整的zz玩意吐槽，真是受不了了。 在网上咱就是个大喷子。Re不Real？明天咱喷半年份的。 记得明天把最近做的系统demo代码先放一下。老子不干图像了！深度学尼玛呢？剩下两年多看看文章复现复现人家论文，我发现自己真没啥研究天赋，还好当时没脑抽去直博。做完这票实验缓缓劲。]]></content>
-      <categories>
-        <category>杂谈</category>
-      </categories>
-      <tags>
-        <tag>杂谈</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[pose estimation tutorials]]></title>
     <url>%2F2018%2F08%2F19%2F%E5%88%86%E4%BA%AB%2F</url>
     <content type="text"><![CDATA[分享一版整理的一些姿态估计心得的repo：https://github.com/IcewineChen/Pose-estimation_tutorials]]></content>
@@ -41,8 +30,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>mxnet</tag>
         <tag>deep learning</tag>
+        <tag>mxnet</tag>
       </tags>
   </entry>
   <entry>
@@ -88,8 +77,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>mxnet</tag>
         <tag>deep learning</tag>
+        <tag>mxnet</tag>
         <tag>triplet loss</tag>
       </tags>
   </entry>
@@ -101,9 +90,9 @@
         <category>deep learning</category>
       </categories>
       <tags>
-        <tag>deep learning</tag>
         <tag>caffe</tag>
         <tag>MacosX</tag>
+        <tag>deep learning</tag>
       </tags>
   </entry>
 </search>
