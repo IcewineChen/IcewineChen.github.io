@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="deep learning,mxnet," />
+  <meta name="keywords" content="mxnet,deep learning," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="关于gluon前几天跟小伙伴们讨论到了几个问题，突然讨论这个事情：比如说我的数据load进来之后，想把不同的batch并行，这样该怎么弄？ 我很喜欢pytorch，但是我大部分时间对pytorch的并行调用dataparallel时的实际操作是把数据一个batch拆分，然后并行到设备上，很明显不符合需求，要是改动还得对底层动刀。然后突然想到嗯，好像除了这个问题，有些时候去符号式这种东西，还真不太适">
-<meta name="keywords" content="deep learning,mxnet">
+<meta name="keywords" content="mxnet,deep learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谈谈gluon和其他我用过的框架">
 <meta property="og:url" content="http://yoursite.com/2018/07/29/gluon/index.html">
@@ -456,9 +456,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deep-learning/" rel="tag"><i class="fa fa-tag"></i> deep learning</a>
-          
             <a href="/tags/mxnet/" rel="tag"><i class="fa fa-tag"></i> mxnet</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"><i class="fa fa-tag"></i> deep learning</a>
           
         </div>
       
@@ -513,10 +513,9 @@
           
 
   
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTMyMy8xNTg1MA=="></div>
+    <div id="gitalk-container">
     </div>
-
+    
   
 
 
@@ -842,27 +841,39 @@
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
+
+
+
+
+
+
+
+
+
+
+
+
   
+    //_config.yml文件若没有添加enable: true可删除该判断
 
+          
+      <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
+      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
+      <script type="text/javascript">
+          var gitalk = new Gitalk({
+            clientID:  '36137a42a89d3231740b', 
+            clientSecret: '9787abb2af27c34e979e8d9af720d90f28dbfac1',
+            id: window.location.pathname,
+            repo: 'Icewinechen.github.io', 
+            owner: 'IcewineChen', 
+            admin: 'IcewineChen', 
+            distractionFreeMode: 'true',
+          })
+          gitalk.render('gitalk-container')
+      </script>
+    
 
-
-
-
-
-
-
-
-
+  
 
 
   
