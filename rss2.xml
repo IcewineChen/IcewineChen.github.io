@@ -8,11 +8,11 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Keep Calm</description>
-    <pubDate>Thu, 30 Aug 2018 16:04:00 GMT</pubDate>
+    <pubDate>Thu, 30 Aug 2018 16:12:52 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
-      <title>gitment——config</title>
+      <title>新评论gitalk系统踩坑</title>
       <link>http://yoursite.com/2018/08/30/gitment%E2%80%94%E2%80%94config/</link>
       <guid>http://yoursite.com/2018/08/30/gitment%E2%80%94%E2%80%94config/</guid>
       <pubDate>Thu, 30 Aug 2018 15:39:58 GMT</pubDate>
