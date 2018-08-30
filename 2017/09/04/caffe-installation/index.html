@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="deep learning,caffe,MacosX," />
+  <meta name="keywords" content="caffe,MacosX,deep learning," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="关于安装本篇讲述的是关于A卡rmbp的caffe安装与编译中一些问题的解决。 Caffe版本我download下的是目前最新的caffe1.0。关于download caffe1.0的包，直接git clone下来  git clone https://github.com/BVLC/caffe.git  配合食用的工具brew基本都用。没有下载homebrew的盆友请如下操作安装homebrew">
-<meta name="keywords" content="deep learning,caffe,MacosX">
+<meta name="keywords" content="caffe,MacosX,deep learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="caffe-installation">
 <meta property="og:url" content="http://yoursite.com/2017/09/04/caffe-installation/index.html">
@@ -505,11 +505,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/deep-learning/" rel="tag"><i class="fa fa-tag"></i> deep learning</a>
-          
             <a href="/tags/caffe/" rel="tag"><i class="fa fa-tag"></i> caffe</a>
           
             <a href="/tags/MacosX/" rel="tag"><i class="fa fa-tag"></i> MacosX</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"><i class="fa fa-tag"></i> deep learning</a>
           
         </div>
       
@@ -900,27 +900,20 @@
 
 
 
-  
-    //_config.yml文件若没有添加enable: true可删除该判断
-
-          
-      <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
-      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
-      <script type="text/javascript">
-          var gitalk = new Gitalk({
-            clientID:  '36137a42a89d3231740b', 
-            clientSecret: '9787abb2af27c34e979e8d9af720d90f28dbfac1',
-            id: window.location.pathname,
-            repo: 'Icewinechen.github.io', 
-            owner: 'IcewineChen', 
-            admin: 'IcewineChen', 
-            distractionFreeMode: 'true',
-          })
-          gitalk.render('gitalk-container')
-      </script>
-    
-
-  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'Icewinechen.github.io',
+          owner: 'IcewineChen',
+          admin: ['IcewineChen'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
   

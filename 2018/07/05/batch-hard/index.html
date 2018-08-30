@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="mxnet,deep learning,triplet loss," />
+  <meta name="keywords" content="deep learning,mxnet,triplet loss," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="I have reproduced a mxnet-version of batch_hard triplet loss.If you want to get the code, click this website(https://github.com/IcewineChen/mxnet-batch_hard_triplet_loss). I achieve the batch hard in">
-<meta name="keywords" content="mxnet,deep learning,triplet loss">
+<meta name="keywords" content="deep learning,mxnet,triplet loss">
 <meta property="og:type" content="article">
 <meta property="og:title" content="batch_hard">
 <meta property="og:url" content="http://yoursite.com/2018/07/05/batch-hard/index.html">
@@ -461,9 +461,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mxnet/" rel="tag"><i class="fa fa-tag"></i> mxnet</a>
-          
             <a href="/tags/deep-learning/" rel="tag"><i class="fa fa-tag"></i> deep learning</a>
+          
+            <a href="/tags/mxnet/" rel="tag"><i class="fa fa-tag"></i> mxnet</a>
           
             <a href="/tags/triplet-loss/" rel="tag"><i class="fa fa-tag"></i> triplet loss</a>
           
@@ -860,27 +860,20 @@
 
 
 
-  
-    //_config.yml文件若没有添加enable: true可删除该判断
-
-          
-      <link rel='stylesheet' href="https://yiyeti.cc/usr/themes/veryse/css/gitalk.css">
-      <script src="https://yiyeti.cc/usr/themes/veryse/css/gitalk.min.js"></script>
-      <script type="text/javascript">
-          var gitalk = new Gitalk({
-            clientID:  '36137a42a89d3231740b', 
-            clientSecret: '9787abb2af27c34e979e8d9af720d90f28dbfac1',
-            id: window.location.pathname,
-            repo: 'Icewinechen.github.io', 
-            owner: 'IcewineChen', 
-            admin: 'IcewineChen', 
-            distractionFreeMode: 'true',
-          })
-          gitalk.render('gitalk-container')
-      </script>
-    
-
-  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '',
+          clientSecret: '',
+          repo: 'Icewinechen.github.io',
+          owner: 'IcewineChen',
+          admin: ['IcewineChen'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
   
