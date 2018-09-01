@@ -8,7 +8,7 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Keep Calm</description>
-    <pubDate>Sat, 01 Sep 2018 09:11:32 GMT</pubDate>
+    <pubDate>Sat, 01 Sep 2018 09:15:59 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -26,7 +26,7 @@
       
       </description>
       
-      <content:encoded><![CDATA[<p>前段时间写了一版multiposenet的结构，调试的时候发现了几个问题。</p><p>首先是pytorch0.4.0到0.4.1的更新。这个版本的更新里引入了一个比较有用的降采样函数，torch.nn.Functional.interpolate。文档上介绍的也很明确，调用时可以指定升/降采样的size或者一个尺度因子scale_factor。之前其实一直没有一个官方给出的降采样函数或是层，原来融合多个size每次都要复用手写的层，某些时候还不知道对不对的上别人文章的降采样方法……这回添加了一个官方的降采样方法，这样可能细节上可能大家都能统一一点，实验代码也好写一点或是复现一点，而且可以下采样到任意size或是scale，避免了很多方法实现上的微妙区别。load模型的时候跟0.4.0没什么区别，不像0.3.0升0.4.0时由于upsample变动导致我大量模型load不能的囧境。</p><p>另外就是关于skimage.io.imread和cv2.imread的一个细节问题，读灰度图时，skimage的读取会读出2通道，而opencv中不添加灰度的flag的时候传入会默认处理成三通道。一开始我随手拿io.imread读了原图，原灰度图是这个样子：<br><img src="https://github.com/IcewineChen/images/blob/master/blog/iocv/ori.png?raw=true" alt="avatar"></p><p>训练跑到一半的时候突然发现tensor运算的时候左右值维度不匹配，才发现了这个细节问题……之前一直都是用cv2.imread,也不会往里传grey的相关参数，直接默认读出三通道，但是灰度图直接拿io.imread调用时会出现shape只有(width,height)两位的问题。</p><p>另外就是multiposenet的子网络问题，目前我也不知道作者在test-dev上的统一size到底用了多大。而且按照原文中的结构，不给出一些细节，最后的ground truth和heatmap的size是绝对不匹配的，目前我强制采样到了256x256，有理解的朋友可以交流一下，代码repo在这：<a href="https://github.com/IcewineChen/pytorch-MultiPoseNet" target="_blank" rel="noopener">https://github.com/IcewineChen/pytorch-MultiPoseNet</a></p>]]></content:encoded>
+      <content:encoded><![CDATA[<p>前段时间写了一版multiposenet的结构，调试的时候发现了几个问题。</p><p>首先是pytorch0.4.0到0.4.1的更新。这个版本的更新里引入了一个比较有用的降采样函数，torch.nn.Functional.interpolate。文档上介绍的也很明确，调用时可以指定升/降采样的size或者一个尺度因子scale_factor。之前其实一直没有一个官方给出的降采样函数或是层，原来融合多个size每次都要复用手写的层，某些时候还不知道对不对的上别人文章的降采样方法……这回添加了一个官方的降采样方法，这样可能细节上可能大家都能统一一点，实验代码也好写一点或是复现一点，而且可以下采样到任意size或是scale，避免了很多方法实现上的微妙区别。load模型的时候跟0.4.0没什么区别，不像0.3.0升0.4.0时由于upsample变动导致我大量模型load不能的囧境。</p><p>另外就是关于skimage.io.imread和cv2.imread的一个细节问题，读灰度图时，skimage的读取会读出2通道，而opencv中不添加灰度的flag的时候传入会默认处理成三通道。一开始我随手拿io.imread读了原图，原灰度图是这个样子：<br><img src="http://wx1.sinaimg.cn/mw690/005uXRWzly1fuu5q3psxhj30bl09076u.jpg" alt="avatar"></p><p>训练跑到一半的时候突然发现tensor运算的时候左右值维度不匹配，才发现了这个细节问题……之前一直都是用cv2.imread,也不会往里传grey的相关参数，直接默认读出三通道，但是灰度图直接拿io.imread调用时会出现shape只有(width,height)两位的问题。</p><p>另外就是multiposenet的子网络问题，目前我也不知道作者在test-dev上的统一size到底用了多大。而且按照原文中的结构，不给出一些细节，最后的ground truth和heatmap的size是绝对不匹配的，目前我强制采样到了256x256，有理解的朋友可以交流一下，代码repo在这：<a href="https://github.com/IcewineChen/pytorch-MultiPoseNet" target="_blank" rel="noopener">https://github.com/IcewineChen/pytorch-MultiPoseNet</a></p>]]></content:encoded>
       
       <comments>http://yoursite.com/2018/09/01/iocv/#disqus_thread</comments>
     </item>
