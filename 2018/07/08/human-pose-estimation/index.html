@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/005uXRWzly1ft2smte6gvj30nw08xwgm.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2taka98hj30qx095jtt.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005uXRWzly1ft2tey7fwij30fk0bnjsx.jpg">
-<meta property="og:updated_time" content="2018-09-02T07:52:57.969Z">
+<meta property="og:updated_time" content="2018-09-02T09:13:57.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="人体姿态估计方法综述">
 <meta name="twitter:description" content="从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的grou">
@@ -459,7 +459,7 @@
       
 
       
-        <p>从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的ground truth坐标高斯分布内生成。3d上方法普遍还是以2d的结果+深度信息的回归做框架。不过最近读了一篇CVPR2018的3d pose工作，觉得3d pose在in the wild上还有很大潜力可挖，在这里也会分享一下。</p>
+        <p>从上学期末到现在，在姿态估计方面的工程和论文、实验也算做了不少。现在想着总结一下，理清一下思路，对之后的研究和实验也能提供一点帮助。pose estimation是个很有意思的课题，目前2d的pose已经做得很成熟了，in the wild或是多人任务都已经非常不错了，3d pose目前还有很多潜力可挖。2d pose多用heatmap特征，ground truth多以keypoints的ground truth坐标高斯分布内生成。3d上方法普遍还是以2d的结果+深度信息的回归做框架。不过最近读了一篇CVPR2018的3d pose工作，觉得3d pose在in the wild上还有很大潜力可挖，在这里也会分享一下。<br><a id="more"></a></p>
 <h1 id="研究概述"><a href="#研究概述" class="headerlink" title="研究概述"></a>研究概述</h1><h2 id="2d-pose-estimation"><a href="#2d-pose-estimation" class="headerlink" title="2d pose estimation"></a>2d pose estimation</h2><p>从CVPR2016到AAAI2018，2D &amp; 3D human pose estimation（姿态估计）浮现了不少好的方法。按时间顺序来说，我大概印象比较深刻的有：</p>
 <ul>
 <li>Convolution pose machine，出自2016的CVPR。论文地址(<a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Wei_Convolutional_Pose_Machines_CVPR_2016_paper.pdf" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Wei_Convolutional_Pose_Machines_CVPR_2016_paper.pdf</a>) ，CMU的工作，一种2D pose估计的方法，利用多个不同scale的effective Receptive Field对应的heatmap进行姿态估计。我个人觉得这篇工作其实很不错，之前做的项目用到过cpm的model做预测，对于固定摄像角度的单人姿态估计非常不错，不过model嵌入到系统里速度和效果不如下面提到的openpose，而且工作在2018年视角看来也比较老了……不过我觉得CPM工作挺经典的，我最早接触的工作也是这篇。</li>

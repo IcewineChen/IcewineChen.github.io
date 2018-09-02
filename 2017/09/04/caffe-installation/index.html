@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://oy6b059ev.bkt.clouddn.com/makeall.png">
 <meta property="og:image" content="http://oy6b059ev.bkt.clouddn.com/pycaffe.png">
 <meta property="og:image" content="http://oy6b059ev.bkt.clouddn.com/caffedone.png">
-<meta property="og:updated_time" content="2018-09-02T07:52:43.010Z">
+<meta property="og:updated_time" content="2018-09-02T09:13:52.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe安装">
 <meta name="twitter:description" content="关于安装本篇讲述的是关于A卡rmbp的caffe安装与编译中一些问题的解决。 Caffe版本我download下的是目前最新的caffe1.0。关于download caffe1.0的包，直接git clone下来  git clone https://github.com/BVLC/caffe.git  配合食用的工具brew基本都用。没有下载homebrew的盆友请如下操作安装homebrew">
@@ -447,7 +447,7 @@
 <p>git clone <a href="https://github.com/BVLC/caffe.git" target="_blank" rel="noopener">https://github.com/BVLC/caffe.git</a></p>
 </blockquote>
 <h3 id="配合食用的工具"><a href="#配合食用的工具" class="headerlink" title="配合食用的工具"></a>配合食用的工具</h3><p>brew基本都用。没有下载homebrew的盆友请如下操作安装homebrew及依赖项<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="keyword">bin/ruby </span>-e <span class="string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></span><br><span class="line"><span class="keyword">brew </span>install wget</span><br></pre></td></tr></table></figure></p>
-<p>之后的caffe编译过程建议选择cmake，cmake使用在后面会说。我们会选用brew进行安装</p>
+<p>之后的caffe编译过程建议选择cmake，cmake使用在后面会说。我们会选用brew进行安装<br><a id="more"></a></p>
 <h3 id="需要的环境"><a href="#需要的环境" class="headerlink" title="需要的环境"></a>需要的环境</h3><h4 id="1-python与c-环境准备"><a href="#1-python与c-环境准备" class="headerlink" title="1.python与c++环境准备"></a>1.python与c++环境准备</h4><p>首先是关于python的问题。之前本地上安装的2.7和3.6，但是在安装过程中改动Makefile的过程中始终会导致numpy连接到System下的pythonframework里。由于这个问题有两个解决方法，后面会详细说道。如果不想释放权限，可以选择安装anaconda，对于之后Makefile.config中的配置比较友好。如果想关掉Rootless对Python.framework中的文件进行编辑，选择进入恢复模式csrutil disabled即可。然而这种头很铁的行为我不推荐。之后会以anaconda配置python的方式便于进行caffe python接口的编译。<br>BAIR的install文档关于libstdc++ installation的部分没什么需要多说的，基本上都不会因为标准库困扰。</p>
 <h4 id="2-关于anaconda"><a href="#2-关于anaconda" class="headerlink" title="2.关于anaconda"></a>2.关于anaconda</h4><p>不能翻的盆友可以直接去tsinghua找一份anaconda的安装包，为了更好的支持caffe1.0，建议选择python2.7版本进行下载。这给一份下载链接：</p>
 <blockquote>
