@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="Hysteria">
 <meta property="og:description" content="新评论系统踩坑经历选择过程网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hypercomments，唯一缺点不支持markdown  好吧那就选gitalk吧 实际工作其实按照网上多如牛毛的添加g">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-30T16:14:01.178Z">
+<meta property="og:updated_time" content="2018-09-02T08:58:49.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新评论gitalk系统踩坑">
 <meta name="twitter:description" content="新评论系统踩坑经历选择过程网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hypercomments，唯一缺点不支持markdown  好吧那就选gitalk吧 实际工作其实按照网上多如牛毛的添加g">
@@ -421,8 +421,7 @@
 <blockquote>
 <p>那说好的坑呢？</p>
 </blockquote>
-<p>别急……有俩坑。</p>
-<p>第一个坑在github应用创建的时候，如果你绑定了自己的个性化域名，homepage url和回调url一定填自己绑定后的域名。这个我开始绑定的github.io，回调就报错。</p>
+<p>别急……有俩坑。<br><a id="more"></a><br>第一个坑在github应用创建的时候，如果你绑定了自己的个性化域名，homepage url和回调url一定填自己绑定后的域名。这个我开始绑定的github.io，回调就报错。</p>
 <p>第二个坑就出在网上花花绿绿不同教程上了。主要是gitalk配置字段的问题。不论你选择哪一种方法，都会有在主题配置文件添加字段的选项，如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gitalk</span></span><br><span class="line"><span class="attr">gitalk:</span> </span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  clientID:</span> <span class="string">'your clientID'</span>    </span><br><span class="line"><span class="attr">  clientSecret:</span> <span class="string">'your clientSecret'</span>   </span><br><span class="line"><span class="attr">  repo:</span> <span class="string">Blog_comments</span>    </span><br><span class="line"><span class="attr">  owner:</span> <span class="string">erbiduo</span>   </span><br><span class="line"><span class="attr">  admin:</span> <span class="string">erbiduo</span></span><br><span class="line"><span class="attr">  distractionFreeMode:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gitalk:</span><br><span class="line">  enable: <span class="literal">true</span></span><br><span class="line">  githubID: github帐号  # 例：asdfv1929   </span><br><span class="line">  repo: 仓库名称   # 例：asdfv1929.github.io</span><br><span class="line">  ClientID:<span class="built_in"> Client </span>ID</span><br><span class="line">  ClientSecret:<span class="built_in"> Client </span>Secret</span><br><span class="line">  adminUser: github帐号 #指定可初始化评论账户</span><br><span class="line">  distractionFreeMode: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>这是我在网上找的两个版本的主题文件配置内容，你猜哪个是对的？</p>
