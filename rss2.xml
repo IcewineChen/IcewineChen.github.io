@@ -8,8 +8,28 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>Keep Calm</description>
-    <pubDate>Mon, 03 Sep 2018 07:20:00 GMT</pubDate>
+    <pubDate>Sun, 09 Sep 2018 16:02:37 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>反向飞驰</title>
+      <link>http://yoursite.com/2018/09/09/run-backward/</link>
+      <guid>http://yoursite.com/2018/09/09/run-backward/</guid>
+      <pubDate>Sun, 09 Sep 2018 15:32:23 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;最近事情堆积如山，准备cvpr的进一步实验，开始校招的长周期准备。其实投稿大概就是督促自己做点事情，毕竟一直只是实验不带着压力工作效率就不高。&lt;/p&gt;
+&lt;p&gt;前途非常迷，今年校招的行情比较迷，看不懂，没有一篇顶会文章算法岗做敲门砖，算法岗很难进大厂，本身我在研究上也不擅长。
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>最近事情堆积如山，准备cvpr的进一步实验，开始校招的长周期准备。其实投稿大概就是督促自己做点事情，毕竟一直只是实验不带着压力工作效率就不高。</p><p>前途非常迷，今年校招的行情比较迷，看不懂，没有一篇顶会文章算法岗做敲门砖，算法岗很难进大厂，本身我在研究上也不擅长。准备拿起老本行，准备找开发，负面情绪堆积严重，毕竟和以前赶上好时候的人相比容易心态爆炸，没有比较就没有伤害。</p><p>其实大部分时间我对于成功和开心的定义都比别人简单：</p><ul><li>波澜不惊就算开心</li><li>比普通人过的好一点就算成功</li></ul><p>然而最近基本都是反向飞驰。没有一天安稳，没有一天看到超越平庸的曙光。</p><p>急需调整心态，明天开始扑在framework修改和刷题。</p>]]></content:encoded>
+      
+      <comments>http://yoursite.com/2018/09/09/run-backward/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>教师论</title>
@@ -95,25 +115,6 @@
       <content:encoded><![CDATA[<p>不得不说社会矛盾现在可能逐渐都折射到学校里了，象牙塔里弥散着一种好闻的腐朽气息，实在让人觉得哭笑不得。</p><p>上研一年，唯一感受到的情绪就是极端的荒诞。从各种角度来说，这一年基本可以称的上是魔幻现实主义的一年了。很多闹剧目前看起来跟喜剧别无二致。暴民的狂欢和暴动一直在推进，大概以下一句话可以概括总结社会百态：</p><blockquote><p>“每个人都是水明星，都是嗨明星” — 抽象圣经</p></blockquote><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1535390574380&amp;di=901de46ab16b2e9610a712c2752c0b0f&amp;imgtype=0&amp;src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw429h513%2F20171213%2F1d5a-fypsqiz5453383.jpg" alt="avatar"></p><p>我同样也暴动了一年。这一年感觉天天没啥心情也没啥目标，机械性的重复劳动，重复码，看看文章，学学数学，然后回屋开始焦虑。再这样继续下去，我都觉得有必要画一条失眠曲线来表现我的悲惨。睡着慢还不够，每每隔个几天我都会有在睡梦中坠落的奇妙体验，这种感觉让我欲罢不能，莫名奇妙的愉悦，唯一的缺点就是半夜容易醒。<br><a id="more"></a><br>这到不怎么奇怪，毕竟焦虑我觉得在天朝研究生中实在是太普遍了，见怪不怪。每天白天疯狂看paper刷代码搭framework或是干一干水水的工程，晚上懈怠下来大概率会焦虑一下嘛，也正常。夹在导师和毕业要求中间，每个人不是失去了尊严，就是失去了自我：我可以循规蹈矩，但是必须放弃尊严；我也可以装死装蠢不听话，但是这样就丧失自我。这种里外不是自己的感觉非常糟糕，伴随着临近毕业的社会压力，往往越来越糟，陷入一个我好想毕业啊 -&gt; 房价好贵，我买不起 -&gt; 还是接着上学吧 -&gt; 上学上够了这种死循环中。而且现在工作岗位竞争也确实竞争激烈，不得不感叹一句晚生了几年。毕竟社会真相大概就是资本决定一切，资本世界的法则我看起来只有一条：</p><blockquote><p>优先进场</p></blockquote><p>这大概是最好赢的办法。很多又蠢又坏的人总在宣传自己无耻的成功学，然而成功的本质就是优先进场。然后无数神经病盯着脑残式的鸡汤一直吮来吮去，直到最后价值观全都带跑偏了，蠢货就能以2的指数倍疯狂增长，然后开始画大饼收割。这种成功最厉害的影响还在于一点，就是让很多不自知的人做上了春秋大梦，开始自诩精英，梦想自己是个时代弄潮儿。这种人可真是太多了，之后这些腌臜构成了社会价值观主流，再以自己无耻至极的价值观强行审判我。我可去你妈的。我没啥追求，只求你自己多蠢多肮脏随意，但是请别拿这个视角看我。然而在大环境下，这种诉求大概是一种奢求。</p><p>我最想抱怨的就是这种奇形怪状的价值观。太多人完全信奉利益驱动型的形式准则，但是我着实不喜欢这个思维方式。腐朽的价值观带来太多戾气和势利，没人不喜欢钱，这毕竟是这个世界最有力的价值交换工具，但是整个社会对金钱的渴望达到一种病态程度的时候，带来的负面影响实在是太大了。信誉与公信力的下降，带来的问题绝不是一时质疑，如果您总觉得钻个空子就是别人都傻，那我也确实说不出话来。</p><p>只是很可惜，我在荒诞的环境里见了太多典型了。我现在搞不清楚到底是我格格不入，还是我高风亮节了。压迫并不能换来反抗，包容也不能带来收益。而更魔幻的其实还是所谓同龄人的相处，满嘴闭嘴都是百元人民币的年代，总让我产生一种我活在一堆资本家中间的错觉。我其实对自诩社会精英的一类人一向反感，占着我们无产阶级的坑带入资本家立场，反过来想当p民头上三座大山。这到底算是抽象还是现实？我觉得这大概是太现实了一点。然而很多人对现实主义的理解也有偏差。我信奉节能一点的现实主义，那就是比普通人过的好一点算是成功。现实从来不是空想或是势利，好歹也是要先看清现实再谈现实主义的吧？</p><blockquote><p>我大概听了各种过于现实的例子。比如说女生说男生没房我要找个北京有房的之流这种故事。我一直觉得从小到大听过最搞笑的说法就是婊子总说女生比男生更成熟。说这种话不觉得搞笑么？靠性别换来的利益变现什么时候变成成熟的标志了？容我先大笑三声。鸡比鸭多说明鸡比鸭高贵？笑掉大牙。</p></blockquote><p>没人跟过的更好过不去。底线这个东西在现在确实被模糊的很厉害，也搞不清楚是人类文明进化的一种形式还是浪漫主义倒退的具体表现。</p><p>只不过问题是夹在社会奇妙价值观和周围环境中间的一批人，日子着实也不太好过。正反从来都是相对的，对错也一样，都是一种微妙的平衡，只不过目前我的正确处在平衡里错误的一方。</p><p>“请品味我的声嘶力竭”。</p><p>这大概就是我唯一能说的。这样的生活着实没花光我所有力气，但是大概磨掉了我本来就不多的棱角。</p>]]></content:encoded>
       
       <comments>http://yoursite.com/2018/08/27/hysteria/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>pose estimation tutorials</title>
-      <link>http://yoursite.com/2018/08/19/%E5%88%86%E4%BA%AB/</link>
-      <guid>http://yoursite.com/2018/08/19/%E5%88%86%E4%BA%AB/</guid>
-      <pubDate>Sun, 19 Aug 2018 02:28:55 GMT</pubDate>
-      <description>
-      
-        
-        
-          &lt;p&gt;分享一版整理的一些姿态估计心得的repo：&lt;a href=&quot;https://github.com/IcewineChen/Pose-estimation_tutorials&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com
-        
-      
-      </description>
-      
-      <content:encoded><![CDATA[<p>分享一版整理的一些姿态估计心得的repo：<a href="https://github.com/IcewineChen/Pose-estimation_tutorials" target="_blank" rel="noopener">https://github.com/IcewineChen/Pose-estimation_tutorials</a></p>]]></content:encoded>
-      
-      <comments>http://yoursite.com/2018/08/19/%E5%88%86%E4%BA%AB/#disqus_thread</comments>
     </item>
     
   </channel>
