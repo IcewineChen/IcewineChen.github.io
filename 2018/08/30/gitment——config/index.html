@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="新评论系统踩坑经历选择过程网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hypercomments，唯一缺点不支持markdown  好吧那就选gitalk吧 实际工作其实按照网上多如牛毛的添加g">
+<meta name="description" content="新评论系统踩坑经历选择过程现在博客已经改成valine了，对一些不常用github的访客来说，评论更简单，如果想用gitalk，可以参照本文。 网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hyp">
 <meta name="keywords" content="杂谈">
 <meta property="og:type" content="article">
 <meta property="og:title" content="新评论gitalk系统踩坑">
 <meta property="og:url" content="http://yoursite.com/2018/08/30/gitment——config/index.html">
 <meta property="og:site_name" content="Hysteria">
-<meta property="og:description" content="新评论系统踩坑经历选择过程网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hypercomments，唯一缺点不支持markdown  好吧那就选gitalk吧 实际工作其实按照网上多如牛毛的添加g">
+<meta property="og:description" content="新评论系统踩坑经历选择过程现在博客已经改成valine了，对一些不常用github的访客来说，评论更简单，如果想用gitalk，可以参照本文。 网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hyp">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-02T08:58:50.000Z">
+<meta property="og:updated_time" content="2018-09-11T14:57:58.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="新评论gitalk系统踩坑">
-<meta name="twitter:description" content="新评论系统踩坑经历选择过程网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hypercomments，唯一缺点不支持markdown  好吧那就选gitalk吧 实际工作其实按照网上多如牛毛的添加g">
+<meta name="twitter:description" content="新评论系统踩坑经历选择过程现在博客已经改成valine了，对一些不常用github的访客来说，评论更简单，如果想用gitalk，可以参照本文。 网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：  hexo官方文档里的扩展：disqus，因为墙你懂得 来必力 同样存在加载慢的问题 gitalk 看起来不错，依托github issue, 支持markdown hyp">
 
 
 
@@ -339,6 +339,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">技术杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -382,7 +404,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  693
+                  731
                 </span>
               
 
@@ -419,7 +441,8 @@
       
 
       
-        <h1 id="新评论系统踩坑经历"><a href="#新评论系统踩坑经历" class="headerlink" title="新评论系统踩坑经历"></a>新评论系统踩坑经历</h1><h2 id="选择过程"><a href="#选择过程" class="headerlink" title="选择过程"></a>选择过程</h2><p>网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：</p>
+        <h1 id="新评论系统踩坑经历"><a href="#新评论系统踩坑经历" class="headerlink" title="新评论系统踩坑经历"></a>新评论系统踩坑经历</h1><h2 id="选择过程"><a href="#选择过程" class="headerlink" title="选择过程"></a>选择过程</h2><p>现在博客已经改成valine了，对一些不常用github的访客来说，评论更简单，如果想用gitalk，可以参照本文。</p>
+<p>网易云跟帖和多说都挂掉了，所以急需一款新的比较好用的跟帖评论工具。比较了下面几种：</p>
 <ul>
 <li>hexo官方文档里的扩展：disqus，因为墙你懂得</li>
 <li>来必力 同样存在加载慢的问题</li>
@@ -592,7 +615,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -696,7 +719,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">13.7k</span>
+    <span title="Site words total count">13.8k</span>
   
 </div>
 
