@@ -80,8 +80,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>deep learning</tag>
         <tag>mxnet</tag>
+        <tag>deep learning</tag>
       </tags>
   </entry>
   <entry>
@@ -132,8 +132,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>deep learning</tag>
         <tag>mxnet</tag>
+        <tag>deep learning</tag>
         <tag>triplet loss</tag>
       </tags>
   </entry>
@@ -145,9 +145,9 @@
         <category>deep learning</category>
       </categories>
       <tags>
+        <tag>deep learning</tag>
         <tag>caffe</tag>
         <tag>MacosX</tag>
-        <tag>deep learning</tag>
       </tags>
   </entry>
 </search>
