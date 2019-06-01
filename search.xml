@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[基于flask+gunicorn+nginx的restful api服务搭建]]></title>
     <url>%2F2019%2F04%2F21%2Fflask%2F</url>
-    <content type="text"><![CDATA[起因本来想周末有时间写一篇hard mining或是一些小模型的总结，不过觉得还是先总结这一周的工作比较好，希望能尽快腾出时间整理一些移动端模型的问题吧…… 最近因为需求问题重新搞起了服务端，本来计划用go来写，后来发现就个人的go水平来说，后期扩展和维护确实是个问题，于是最后还是选择了基于flask构建restful服务，毕竟对于并发处理要求不是很高的服务来说，python的业务逻辑写起来也比较简单，效率问题也不大。用了一周时间简单搭建了基于flask的api并重构了代码，其中多线程方案上我选择了gunicorn+flask的方案，搭建之后用nginx反向代理上线测试，这个方案对于访问量不算太大的服务来说，简单够用。下面来简单聊聊搭建时候的一些流程和问题。如果不知道什么是restful api,可以先参考一下这篇博文：http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html flask项目后端内容分离关于flask，官方文档quick start给出的写法是这样的：12345678910# app.pyfrom flask import Flaskapp = Flask(__name__)@app.route(restful_api,methods=['GET','POST'])def func(): passif __name__ == "__main__": app.run(host='0.0.0.0',debug=True) 但是实际项目应用中，肯定不能将route放在app启动的入口文件中，系统后续扩展api时，会导致app.py文件过长，难维护，移交麻烦等问题。 分离方法也不少，我采取了这样的分离方案：123|--- resources|--- common|--- app.py 我们将每个api的实现逻辑封装在resource目录下，如下所示，foo中的get方法和post方法分别对应get和post请求的处理逻辑12345678# resources/foo.pyfrom flask_restful import Resourceclass foo(Resource): def get(self): pass def post(self): pass 在common下，我们可以定义一系列需要复用的逻辑或是封装的方法，供resources下的api类别调用 在app.py中，我们这样引入resources下面的逻辑,和quick start中的写法等价：1234567from flask_restful import Apifrom flask import Flaskfrom resources.foo import fooapp = Flask(__name__)api = Api(app)api.add_resource(foo,'/api/version/service') 通过这种结构，我们将api的构建和route，resources相互分离，需要封装和复用的一些方法放在common下，也有利于解耦和之后的扩展。至于再前后端分离的话，flask也很好做，引入flask_cors，直接添加一句CORS(app)逻辑即可处理跨域 flask+gunicorn多线程方案gunicorn使用非常简单，直接pip install即可，之后只需要启动时利用gunicorn指定app和线程，如gunicorn - -b: :app即可启动，写一个start.sh传线程数参即可，非常方便且容易使用。我查阅资料的时候发现flask内置的run函数也有指定线程数的参数，但是stackoverflow上一致推荐用gunicorn，说内置thread参数在shell运行会失效(没试过，我并不确定)，所以最后还是用了gunicorn nginx反向代理这个大家就比较熟悉了，直接在server项配置里指定我们要映射到的断口和ip，然后添加下面几句配置即可映射到你想指定的域名和端口：123456789server&#123; listen port; server_name domain/ip; location &#123; proxy_pass http://0.0.0.0:5000; # flask run中指定的服务器ip和端口 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; &#125;&#125; 整体而言这套方案相对还是挺灵活的，搭建负载要求没那么高的系统还是不错的。五一要出门玩，这周争取总结下移动端模型的问题，并且总结一些移动端模型的工程问题=-=希望这周好运，实验慢慢做起来，性能向上走一波]]></content>
+    <content type="text"><![CDATA[起因本来想周末有时间写一篇hard mining或是一些小模型的总结，不过觉得还是先总结这一周的工作比较好，希望能尽快腾出时间整理一些移动端模型的问题吧…… 最近因为需求问题重新搞起了服务端，本来计划用go来写，后来发现就个人的go水平来说，后期扩展和维护确实是个问题，于是最后还是选择了基于flask构建restful服务，毕竟对于并发处理要求不是很高的服务来说，python的业务逻辑写起来也比较简单，效率问题也不大。用了一周时间简单搭建了基于flask的api并重构了代码，其中多线程方案上我选择了gunicorn+flask的方案，搭建之后用nginx反向代理上线测试，这个方案对于访问量不算太大的服务来说，简单够用。下面来简单聊聊搭建时候的一些流程和问题。如果不知道什么是restful api,可以先参考一下这篇博文：http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html flask项目后端内容分离关于flask，官方文档quick start给出的写法是这样的：12345678910# app.pyfrom flask import Flaskapp = Flask(__name__)@app.route(restful_api,methods=['GET','POST'])def func(): passif __name__ == "__main__": app.run(host='0.0.0.0',debug=True) 但是实际项目应用中，肯定不能将route放在app启动的入口文件中，系统后续扩展api时，会导致app.py文件过长，难维护，移交麻烦等问题。 分离方法也不少，我采取了这样的分离方案：1234|--- resources|--- models|--- common|--- app.py 我们将每个api的实现逻辑封装在resource目录下，如下所示，foo中的get方法和post方法分别对应get和post请求的处理逻辑12345678# resources/foo.pyfrom flask_restful import Resourceclass foo(Resource): def get(self): pass def post(self): pass 在common下，我们可以定义一系列需要复用的逻辑或是封装的方法，供resources下的api类别调用 在app.py中，我们这样引入resources下面的逻辑,和quick start中的写法等价：1234567from flask_restful import Apifrom flask import Flaskfrom resources.foo import fooapp = Flask(__name__)api = Api(app)api.add_resource(foo,'/api/version/service') 通过这种结构，我们将api的构建和route，resources相互分离，需要封装和复用的一些方法放在common下，也有利于解耦和之后的扩展。至于再前后端分离的话，flask也很好做，引入flask_cors，直接添加一句CORS(app)逻辑即可处理跨域 flask+gunicorn多线程方案gunicorn使用非常简单，直接pip install即可，之后只需要启动时利用gunicorn指定app和线程，如gunicorn - -b: :app即可启动，写一个start.sh传线程数参即可，非常方便且容易使用。我查阅资料的时候发现flask内置的run函数也有指定线程数的参数，但是stackoverflow上一致推荐用gunicorn，说内置thread参数在shell运行会失效(没试过，我并不确定)，所以最后还是用了gunicorn nginx反向代理这个大家就比较熟悉了，直接在server项配置里指定我们要映射到的断口和ip，然后添加下面几句配置即可映射到你想指定的域名和端口：123456789server&#123; listen port; server_name domain/ip; location &#123; proxy_pass http://0.0.0.0:5000; # flask run中指定的服务器ip和端口 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; &#125;&#125; 整体而言这套方案相对还是挺灵活的，搭建负载要求没那么高的系统还是不错的。五一要出门玩，这周争取总结下移动端模型的问题，并且总结一些移动端模型的工程问题=-=希望这周好运，实验慢慢做起来，性能向上走一波]]></content>
       <tags>
         <tag>web开发</tag>
       </tags>
@@ -112,8 +112,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>deep learning</tag>
         <tag>mxnet</tag>
+        <tag>deep learning</tag>
       </tags>
   </entry>
   <entry>
@@ -164,8 +164,8 @@
         <category>mxnet</category>
       </categories>
       <tags>
-        <tag>deep learning</tag>
         <tag>mxnet</tag>
+        <tag>deep learning</tag>
         <tag>triplet loss</tag>
       </tags>
   </entry>
@@ -177,9 +177,9 @@
         <category>deep learning</category>
       </categories>
       <tags>
+        <tag>deep learning</tag>
         <tag>caffe</tag>
         <tag>MacosX</tag>
-        <tag>deep learning</tag>
       </tags>
   </entry>
 </search>
